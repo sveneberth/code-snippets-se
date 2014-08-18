@@ -70,9 +70,9 @@ function scrollto(place, valuetype) {
 }
 
 //--- images first show after load --------------------------------------------
-var images-show-after-laod = true;
+var images_show_after_laod = true;
 $(document).ready(function() {
-	if(images-show-after-laod) {
+	if(images_show_after_laod) {
 		$('img').each(function(){
 			if(!$(this).hasClass("nojsload")) {
 				$(this).hide();
