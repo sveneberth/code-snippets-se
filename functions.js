@@ -57,7 +57,7 @@ function scrollto(place, valuetype) {
 	}
 	if(valuetype == "position") {	
 		$('html,body').animate({
-			scrollTop: place;
+			scrollTop: place^
 		}, 1000);
 		return false;
 	}
