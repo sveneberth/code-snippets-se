@@ -42,14 +42,44 @@ var emailpattern = new RegExp('^([a-zA-Z0-9\\-\\.\\_]+)(\\@)([a-zA-Z0-9\\-\\.]+)
 
 //--- Scroll to place ---
 $(document).ready(function() {
-	$(function(){
-		$("a[href^='#']").click(function(event) {
-			event.preventDefault();
-			var target = $(this).attr('href');
-			$('html,body').animate({
-				scrollTop: $(target).offset().top-30
-			},1000);
-			console.log("Scroll to "+target);
-		});
+	$("a[href^='#']").click(function(event) {
+		event.preventDefault();
+		var target = $(this).attr('href');
+		$('html,body').animate({
+			scrollTop: $(target).offset().top
+		}, 1000);
+		console.log("Scroll to "+target);
 	});
+});
+function scrollto(place, valuetype) {
+	if(typeof valuetype == "undefined") {
+		var valuetype = object;
+	}
+	if(valuetype == "position") {	
+		$('html,body').animate({
+			scrollTop: $(place).offset().top
+		}, 1000);
+		return false;
+	}
+	if(valuetype == "object") {	
+		$('html,body').animate({
+			scrollTop: $(place).offset().top
+		}, 1000);
+		return false;
+	}
+}
+
+//--- images first show after load --------------------------------------------
+var images-show-after-laod = true;
+$(document).ready(function() {
+	if(images-show-after-laod) {
+		$('img').each(function(){
+			if(!$(this).hasClass("nojsload")) {
+				$(this).hide();
+				$(this).load(function() {
+					$(this).fadeIn(400);
+				});
+			}
+		})
+	}
 });
