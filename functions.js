@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	//--- check if presed enter ---
+	//--- check if pressed enter ---
 	$.fn.pressEnter = function(fn) {
 		return this.each(function() {
 			$(this).bind('enterPress', fn);
