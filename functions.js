@@ -1,3 +1,4 @@
+$(document).ready(function() {
 	//--- check if pressed enter ---
 	$.fn.pressEnter = function(fn) {
 		return this.each(function() {
@@ -9,8 +10,6 @@
 			})
 		});  
 	};
-$(document).ready(function() {
-	
 	//---reload a image
 	$.fn.reloadimg = function(fn) {
 		return this.each(function(index) {
