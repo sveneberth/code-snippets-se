@@ -63,7 +63,7 @@ $(document).ready(function() {
 
 function scrollto(place, valuetype) {
 	if(typeof valuetype == "undefined") {
-		var valuetype = "object"";
+		var valuetype = "object";
 	}
 	if(valuetype == "position") {	
 		$('html,body').animate({
