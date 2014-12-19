@@ -45,10 +45,14 @@ $(document).ready(function() {
 		event.preventDefault();
 		var target = $(this).attr('href');
 		var bodyTop = $('body').offset().top;
-		$('html,body').animate({
-			scrollTop: $(target).offset().top - bodyTop
-		}, 1000);
-		console.log("Scroll to "+target);
+		if($(target).length > 0) {
+			$('html,body').animate({
+				scrollTop: $(target).offset().top - bodyTop
+			}, 1000);
+			console.log("scroll to "+target);
+		} else {
+			console.error("Cannot scroll to "+target);
+		}
 		return false;
 	});
 });
