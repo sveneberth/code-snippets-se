@@ -41,24 +41,29 @@ var emailpattern = new RegExp('^([a-zA-Z0-9\\-\\.\\_]+)(\\@)([a-zA-Z0-9\\-\\.]+)
 
 //--- Scroll to place ---
 $(document).ready(function() {
-	$("a[href^='#']").click(function(event) {
+	$("a[href^='#']:not(.noscroll)").click(function(event) {
 		event.preventDefault();
+		
 		var target = $(this).attr('href');
 		var bodyTop = $('body').offset().top;
+		
 		if($(target).length > 0) {
-			$('html,body').animate({
-				scrollTop: $(target).offset().top - bodyTop
-			}, 1000);
+			var targetPos = $(target).offset().top - bodyTop;
+			
+			scrollto(targetPos, 'position');
+			
 			console.log("scroll to "+target);
 		} else {
 			console.error("Cannot scroll to "+target);
 		}
+		
 		return false;
 	});
 });
+
 function scrollto(place, valuetype) {
 	if(typeof valuetype == "undefined") {
-		var valuetype = object;
+		var valuetype = "object"";
 	}
 	if(valuetype == "position") {	
 		$('html,body').animate({
