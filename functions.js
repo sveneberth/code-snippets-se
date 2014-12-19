@@ -54,7 +54,7 @@ $(document).ready(function() {
 			
 			console.log("scroll to "+target);
 		} else {
-			console.error("Cannot scroll to '" + target + "' -  object not found" );
+			console.debug("Cannot scroll to '" + target + "' - object not found" );
 		}
 		
 		return false;
