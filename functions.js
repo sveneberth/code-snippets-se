@@ -1,3 +1,10 @@
+/*!
+ * functions
+ * https://code.google.com/p/code-snippets-se/
+ *
+ * Copyright 2015 Sven Eberth
+ * Released under the MIT license, see LICENSE.txt
+ */
 $(document).ready(function() {
 	//--- check if pressed enter ---
 	$.fn.pressEnter = function(fn) {
@@ -112,6 +119,9 @@ function round(number, decimalplaces) {
 	var result = Math.round(number * factor) / factor ;
 	return result;
 }
+
+
+// the following functions are not my own!
 
 function utf8_encode(argString) {
   //  discuss at: http://phpjs.org/functions/utf8_encode/
