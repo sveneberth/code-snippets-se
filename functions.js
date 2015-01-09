@@ -41,42 +41,51 @@ var emailpattern = new RegExp('^([a-zA-Z0-9\\-\\.\\_]+)(\\@)([a-zA-Z0-9\\-\\.]+)
 
 //--- Scroll to place ---
 $(document).ready(function() {
-	$("a[href^='#']:not(.noscroll)").click(function(event) {
-		event.preventDefault();
-		
-		var target = $(this).attr('href');
-		var bodyTop = $('body').offset().top;
-		
-		if($(target).length > 0) {
-			var targetPos = $(target).offset().top - bodyTop;
+	try {
+		$("a[href^='#']:not(.noscroll)").live('click', function(event) {
+			event.preventDefault();
 			
-			scrollto(targetPos, 'position');
+			var target = $(this).attr('href');
+			scrollto(target);
 			
-			console.log("scroll to "+target);
-		} else {
-			console.debug("Cannot scroll to '" + target + "' - object not found" );
-		}
-		
-		return false;
-	});
+			return false;
+		});
+	}
+	catch(err) {
+		console.log(err);
+		$("a[href^='#']:not(.noscroll)").click(function(event) {
+			event.preventDefault();
+			
+			var target = $(this).attr('href');
+			scrollto(target);
+			
+			return false;
+		});
+	}
 });
 
-function scrollto(place, valuetype) {
+function scrollto(target, valuetype) {
 	if(typeof valuetype == "undefined") {
 		var valuetype = "object";
 	}
 	if(valuetype == "position") {	
-		$('html,body').animate({
-			scrollTop: place
-		}, 1000);
-		return false;
+		var place = target;
 	}
 	if(valuetype == "object") {	
-		$('html,body').animate({
-			scrollTop: $(place).offset().top
-		}, 1000);
-		return false;
+		if($(target).length > 0) {
+			var targetPos = $(target).offset().top;
+			var bodyTop = $('body').offset().top;
+			var place = targetPos - bodyTop;
+		} else {
+			console.error("Can not scroll to '" + target + "' - object not found" );
+		}
 	}
+
+	$('html,body').animate({
+		scrollTop: place
+	}, 1000);
+
+	return false;
 }
 
 //--- images first show after load --------------------------------------------
