@@ -38,6 +38,11 @@ function basename(path) {
 	return b;
 }
 
+//--- function isset (like PHP) ---
+function isset(str) {
+	return typeof str != 'undefined';
+}
+
 //--- function empty (like PHP) ---
 function empty(str) {
     return (!str || 0 === str.length);
