@@ -48,7 +48,8 @@ var emailpattern = new RegExp('^([a-zA-Z0-9\\-\\.\\_]+)(\\@)([a-zA-Z0-9\\-\\.]+)
 
 //--- Scroll to place ---
 $(document).ready(function() {
-	try {
+	try
+	{
 		$("a[href^='#']:not(.noscroll)").live('click', function(event) {
 			event.preventDefault();
 			
@@ -58,7 +59,8 @@ $(document).ready(function() {
 			return false;
 		});
 	}
-	catch(err) {
+	catch(err)
+	{
 		console.log(err);
 		$("a[href^='#']:not(.noscroll)").click(function(event) {
 			event.preventDefault();
@@ -110,16 +112,30 @@ $(document).ready(function() {
 	}
 });
 
+
+//--- function to check, if int -----------------------------------------------
 function isInt(n) {
    return n % 1 === 0;
 }
 
+
+//--- function to check, if JSON ----------------------------------------------
+function isJSON(str) {
+	return (/^[\],:{}\s]*$/.test(str.replace(/\\["\\\/bfnrtu]/g, '@').
+	replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+	replace(/(?:^|:|,)(?:\s*\[)+/g, '')));
+}
+
+
+//--- function to round on decimalplaces --------------------------------------
 function round(number, decimalplaces) {
 	var factor = Math.pow(10, decimalplaces);
 	var result = Math.round(number * factor) / factor ;
 	return result;
 }
 
+
+//--- function to convert file sizes ------------------------------------------
 function FileSizeConvert(bytes) {
     bytes = parseFloat(bytes);
 	if(bytes == 0)
@@ -159,8 +175,9 @@ function FileSizeConvert(bytes) {
     return result;
 }
 
-
+// #######################################
 // the following functions are not my own!
+// #######################################
 
 function utf8_encode(argString) {
   //  discuss at: http://phpjs.org/functions/utf8_encode/
