@@ -175,6 +175,11 @@ function FileSizeConvert(bytes) {
     return result;
 }
 
+//--- function to get nth radical ---------------------------------------------
+Math['radical'] = function(base, n) {
+	return Math.pow(base, 1/n);
+};
+
 // #######################################
 // the following functions are not my own!
 // #######################################
