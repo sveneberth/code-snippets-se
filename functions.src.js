@@ -1,6 +1,6 @@
 /*!
  * functions
- * https://code.google.com/p/code-snippets-se/
+ * https://github.com/sveneberth/code-snippets-se
  *
  * Copyright 2015 Sven Eberth
  * Released under the MIT license, see LICENSE.txt
@@ -97,9 +97,12 @@ function scrollto(target, valuetype) {
 	return false;
 }
 
+
 //--- images first show after load --------------------------------------------
-var images_show_after_laod = true;
 $(document).ready(function() {
+	if(typeof images_show_after_laod == "undefined") {
+		var images_show_after_laod = true;
+	}
 	if(images_show_after_laod) {
 		$('img').each(function(){
 			if(!$(this).hasClass("nojsload")) {
@@ -138,8 +141,10 @@ function round(number, decimalplaces) {
 //--- function to convert file sizes ------------------------------------------
 function FileSizeConvert(bytes) {
     bytes = parseFloat(bytes);
+	
 	if(bytes == 0)
 		return "0 B";
+		
 	var arBytes =
 	[
 		{
@@ -175,10 +180,13 @@ function FileSizeConvert(bytes) {
     return result;
 }
 
+
 //--- function to get the nth root --------------------------------------------
 Math['root'] = function(base, n) {
 	return Math.pow(base, 1/n);
 };
+
+
 
 // #######################################
 // the following functions are not my own!
