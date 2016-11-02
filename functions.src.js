@@ -1,11 +1,12 @@
-/*!
+/**
  * functions
  * https://github.com/sveneberth/code-snippets-se
  *
- * Copyright 2015 Sven Eberth
+ * Copyright 2016 Sven Eberth
  * Released under the MIT license, see LICENSE.txt
  */
-$(document).ready(function() {
+
+ $(function() {
 	//--- check if pressed enter ---
 	$.fn.pressEnter = function(fn) {
 		return this.each(function() {
@@ -15,7 +16,7 @@ $(document).ready(function() {
 					$(this).trigger("enterPress");
 				}
 			})
-		});  
+		});
 	};
 	//---reload a image
 	$.fn.reloadimg = function(fn) {
@@ -23,12 +24,12 @@ $(document).ready(function() {
 			var src = $(this).attr('src');
 			$(this).attr('src', src);
 			console.log("reload image:\nimg="+index+"\nsrc='"+src+"'");
-		});  
+		});
 	};
 });
 
 //--- function basename (like PHP) ---
-function basename(path) {
+function basename (path) {
 	var b = path;
 	var lastChar = b.charAt(b.length - 1);
 	if (lastChar === '/' || lastChar === '\\') {
@@ -39,48 +40,33 @@ function basename(path) {
 }
 
 //--- function empty (like PHP) ---
-function empty(str) {
-    return (!str || 0 === str.length);
+function empty (str) {
+	return (!str || 0 === str.length);
 }
 
 //--- emailpattern ---
 var emailpattern = new RegExp('^([a-zA-Z0-9\\-\\.\\_]+)(\\@)([a-zA-Z0-9\\-\\.]+)(\\.)([a-zA-Z]{2,4})$');
 
 //--- Scroll to place ---
-$(document).ready(function() {
-	try
-	{
-		$("a[href^='#']:not(.noscroll)").live('click', function(event) {
-			event.preventDefault();
-			
-			var target = $(this).attr('href');
-			scrollto(target);
-			
-			return false;
-		});
-	}
-	catch(err)
-	{
-		console.log(err);
-		$("a[href^='#']:not(.noscroll)").click(function(event) {
-			event.preventDefault();
-			
-			var target = $(this).attr('href');
-			scrollto(target);
-			
-			return false;
-		});
-	}
-});
+$(function() {
+	$("a[href^='#']:not(.noscroll)").on('click', function(event) {
+		event.preventDefault();
 
-function scrollto(target, valuetype) {
+		var target = $(this).attr('href');
+		scrollto(target);
+
+		return false;
+	});
+})
+
+function scrollto (target, valuetype) {
 	if(typeof valuetype == "undefined") {
 		var valuetype = "object";
 	}
-	if(valuetype == "position") {	
+	if(valuetype == "position") {
 		var place = target;
 	}
-	if(valuetype == "object") {	
+	if(valuetype == "object") {
 		if($(target).length > 0) {
 			var targetPos = $(target).offset().top;
 			var bodyTop = $('body').offset().top;
@@ -99,7 +85,7 @@ function scrollto(target, valuetype) {
 
 
 //--- images first show after load --------------------------------------------
-$(document).ready(function() {
+$(function() {
 	if(typeof images_show_after_laod == "undefined") {
 		var images_show_after_laod = true;
 	}
@@ -117,21 +103,21 @@ $(document).ready(function() {
 
 
 //--- function to check, if int -----------------------------------------------
-function isInt(n) {
-   return n % 1 === 0;
+function isInt (n) {
+	return n % 1 === 0;
 }
 
 
 //--- function to check, if JSON ----------------------------------------------
-function isJSON(str) {
+function isJSON (str) {
 	return (/^[\],:{}\s]*$/.test(str.replace(/\\["\\\/bfnrtu]/g, '@').
-	replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-	replace(/(?:^|:|,)(?:\s*\[)+/g, '')));
+		replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+		replace(/(?:^|:|,)(?:\s*\[)+/g, '')));
 }
 
 
 //--- function to round on decimalplaces --------------------------------------
-function round(number, decimalplaces) {
+function round (number, decimalplaces) {
 	var factor = Math.pow(10, decimalplaces);
 	var result = Math.round(number * factor) / factor ;
 	return result;
@@ -139,45 +125,15 @@ function round(number, decimalplaces) {
 
 
 //--- function to convert file sizes ------------------------------------------
-function FileSizeConvert(bytes) {
-    bytes = parseFloat(bytes);
-	
-	if(bytes == 0)
-		return "0 B";
-		
-	var arBytes =
-	[
-		{
-			unit: "TiB",
-			value: Math.pow(1024, 4)
-		},
-		{
-			unit: "GiB",
-			value: Math.pow(1024, 3)
-		},
-		{
-			unit: "MiB",
-			value: Math.pow(1024, 2)
-		},
-		{
-			unit: "KiB",
-			value: 1024
-		},
-		{
-			unit: "B",
-			value: 1
-		},
-	];
+function FileSizeConvert (bytes, decimals) {
+	if (bytes == 0) return '0 Byte';
 
-    for(var Item in arBytes) {
-        if(bytes >= arBytes[Item]['value']) {
-            var result = bytes / arBytes[Item]['value'];
-			var str = round(result, 2)+" "+arBytes[Item]['unit'];
-            result = str.replace(".", ",");
-            break;
-        }
-    }
-    return result;
+	var k = 1000;
+	var dm = decimals || 3;
+	var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+	var i = Math.floor(Math.log(bytes) / Math.log(k));
+
+	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
 
@@ -192,7 +148,7 @@ Math['root'] = function(base, n) {
 // the following functions are not my own!
 // #######################################
 
-function utf8_encode(argString) {
+function utf8_encode (argString) {
   //  discuss at: http://phpjs.org/functions/utf8_encode/
   // original by: Webtoolkit.info (http://www.webtoolkit.info/)
   // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
@@ -209,58 +165,58 @@ function utf8_encode(argString) {
   //   returns 1: 'Kevin van Zonneveld'
 
   if (argString === null || typeof argString === 'undefined') {
-    return '';
+  	return '';
   }
 
   var string = (argString + ''); // .replace(/\r\n/g, "\n").replace(/\r/g, "\n");
   var utftext = '',
-    start, end, stringl = 0;
+  start, end, stringl = 0;
 
   start = end = 0;
   stringl = string.length;
   for (var n = 0; n < stringl; n++) {
-    var c1 = string.charCodeAt(n);
-    var enc = null;
+  	var c1 = string.charCodeAt(n);
+  	var enc = null;
 
-    if (c1 < 128) {
-      end++;
-    } else if (c1 > 127 && c1 < 2048) {
-      enc = String.fromCharCode(
-        (c1 >> 6) | 192, (c1 & 63) | 128
-      );
-    } else if ((c1 & 0xF800) != 0xD800) {
-      enc = String.fromCharCode(
-        (c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
-      );
+  	if (c1 < 128) {
+  		end++;
+  	} else if (c1 > 127 && c1 < 2048) {
+  		enc = String.fromCharCode(
+  			(c1 >> 6) | 192, (c1 & 63) | 128
+  			);
+  	} else if ((c1 & 0xF800) != 0xD800) {
+  		enc = String.fromCharCode(
+  			(c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
+  			);
     } else { // surrogate pairs
-      if ((c1 & 0xFC00) != 0xD800) {
-        throw new RangeError('Unmatched trail surrogate at ' + n);
-      }
-      var c2 = string.charCodeAt(++n);
-      if ((c2 & 0xFC00) != 0xDC00) {
-        throw new RangeError('Unmatched lead surrogate at ' + (n - 1));
-      }
-      c1 = ((c1 & 0x3FF) << 10) + (c2 & 0x3FF) + 0x10000;
-      enc = String.fromCharCode(
-        (c1 >> 18) | 240, ((c1 >> 12) & 63) | 128, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
-      );
+    	if ((c1 & 0xFC00) != 0xD800) {
+    		throw new RangeError('Unmatched trail surrogate at ' + n);
+    	}
+    	var c2 = string.charCodeAt(++n);
+    	if ((c2 & 0xFC00) != 0xDC00) {
+    		throw new RangeError('Unmatched lead surrogate at ' + (n - 1));
+    	}
+    	c1 = ((c1 & 0x3FF) << 10) + (c2 & 0x3FF) + 0x10000;
+    	enc = String.fromCharCode(
+    		(c1 >> 18) | 240, ((c1 >> 12) & 63) | 128, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
+    		);
     }
     if (enc !== null) {
-      if (end > start) {
-        utftext += string.slice(start, end);
-      }
-      utftext += enc;
-      start = end = n + 1;
+    	if (end > start) {
+    		utftext += string.slice(start, end);
+    	}
+    	utftext += enc;
+    	start = end = n + 1;
     }
-  }
-
-  if (end > start) {
-    utftext += string.slice(start, stringl);
-  }
-
-  return utftext;
 }
-function SHA1(str) {
+
+if (end > start) {
+	utftext += string.slice(start, stringl);
+}
+
+return utftext;
+}
+function SHA1 (str) {
   //  discuss at: http://phpjs.org/functions/sha1/
   // original by: Webtoolkit.info (http://www.webtoolkit.info/)
   // improved by: Michael White (http://getsprink.com)
@@ -271,8 +227,8 @@ function SHA1(str) {
   //   returns 1: '54916d2e62f65b3afa6e192e6a601cdbe5cb5897'
 
   var rotate_left = function(n, s) {
-    var t4 = (n << s) | (n >>> (32 - s));
-    return t4;
+  	var t4 = (n << s) | (n >>> (32 - s));
+  	return t4;
   };
 
   /*var lsb_hex = function (val) { // Not in use; needed?
@@ -287,122 +243,122 @@ function SHA1(str) {
       str += vh.toString(16) + vl.toString(16);
     }
     return str;
-  };*/
+};*/
 
-  var cvt_hex = function(val) {
-    var str = '';
-    var i;
-    var v;
+var cvt_hex = function(val) {
+	var str = '';
+	var i;
+	var v;
 
-    for (i = 7; i >= 0; i--) {
-      v = (val >>> (i * 4)) & 0x0f;
-      str += v.toString(16);
-    }
-    return str;
-  };
+	for (i = 7; i >= 0; i--) {
+		v = (val >>> (i * 4)) & 0x0f;
+		str += v.toString(16);
+	}
+	return str;
+};
 
-  var blockstart;
-  var i, j;
-  var W = new Array(80);
-  var H0 = 0x67452301;
-  var H1 = 0xEFCDAB89;
-  var H2 = 0x98BADCFE;
-  var H3 = 0x10325476;
-  var H4 = 0xC3D2E1F0;
-  var A, B, C, D, E;
-  var temp;
+var blockstart;
+var i, j;
+var W = new Array(80);
+var H0 = 0x67452301;
+var H1 = 0xEFCDAB89;
+var H2 = 0x98BADCFE;
+var H3 = 0x10325476;
+var H4 = 0xC3D2E1F0;
+var A, B, C, D, E;
+var temp;
 
-  str = this.utf8_encode(str);
-  var str_len = str.length;
+str = this.utf8_encode(str);
+var str_len = str.length;
 
-  var word_array = [];
-  for (i = 0; i < str_len - 3; i += 4) {
-    j = str.charCodeAt(i) << 24 | str.charCodeAt(i + 1) << 16 | str.charCodeAt(i + 2) << 8 | str.charCodeAt(i + 3);
-    word_array.push(j);
-  }
+var word_array = [];
+for (i = 0; i < str_len - 3; i += 4) {
+	j = str.charCodeAt(i) << 24 | str.charCodeAt(i + 1) << 16 | str.charCodeAt(i + 2) << 8 | str.charCodeAt(i + 3);
+	word_array.push(j);
+}
 
-  switch (str_len % 4) {
-    case 0:
-      i = 0x080000000;
-      break;
-    case 1:
-      i = str.charCodeAt(str_len - 1) << 24 | 0x0800000;
-      break;
-    case 2:
-      i = str.charCodeAt(str_len - 2) << 24 | str.charCodeAt(str_len - 1) << 16 | 0x08000;
-      break;
-    case 3:
-      i = str.charCodeAt(str_len - 3) << 24 | str.charCodeAt(str_len - 2) << 16 | str.charCodeAt(str_len - 1) <<
-        8 | 0x80;
-      break;
-  }
+switch (str_len % 4) {
+	case 0:
+	i = 0x080000000;
+	break;
+	case 1:
+	i = str.charCodeAt(str_len - 1) << 24 | 0x0800000;
+	break;
+	case 2:
+	i = str.charCodeAt(str_len - 2) << 24 | str.charCodeAt(str_len - 1) << 16 | 0x08000;
+	break;
+	case 3:
+	i = str.charCodeAt(str_len - 3) << 24 | str.charCodeAt(str_len - 2) << 16 | str.charCodeAt(str_len - 1) <<
+	8 | 0x80;
+	break;
+}
 
-  word_array.push(i);
+word_array.push(i);
 
-  while ((word_array.length % 16) != 14) {
-    word_array.push(0);
-  }
+while ((word_array.length % 16) != 14) {
+	word_array.push(0);
+}
 
-  word_array.push(str_len >>> 29);
-  word_array.push((str_len << 3) & 0x0ffffffff);
+word_array.push(str_len >>> 29);
+word_array.push((str_len << 3) & 0x0ffffffff);
 
-  for (blockstart = 0; blockstart < word_array.length; blockstart += 16) {
-    for (i = 0; i < 16; i++) {
-      W[i] = word_array[blockstart + i];
-    }
-    for (i = 16; i <= 79; i++) {
-      W[i] = rotate_left(W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16], 1);
-    }
+for (blockstart = 0; blockstart < word_array.length; blockstart += 16) {
+	for (i = 0; i < 16; i++) {
+		W[i] = word_array[blockstart + i];
+	}
+	for (i = 16; i <= 79; i++) {
+		W[i] = rotate_left(W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16], 1);
+	}
 
-    A = H0;
-    B = H1;
-    C = H2;
-    D = H3;
-    E = H4;
+	A = H0;
+	B = H1;
+	C = H2;
+	D = H3;
+	E = H4;
 
-    for (i = 0; i <= 19; i++) {
-      temp = (rotate_left(A, 5) + ((B & C) | (~B & D)) + E + W[i] + 0x5A827999) & 0x0ffffffff;
-      E = D;
-      D = C;
-      C = rotate_left(B, 30);
-      B = A;
-      A = temp;
-    }
+	for (i = 0; i <= 19; i++) {
+		temp = (rotate_left(A, 5) + ((B & C) | (~B & D)) + E + W[i] + 0x5A827999) & 0x0ffffffff;
+		E = D;
+		D = C;
+		C = rotate_left(B, 30);
+		B = A;
+		A = temp;
+	}
 
-    for (i = 20; i <= 39; i++) {
-      temp = (rotate_left(A, 5) + (B ^ C ^ D) + E + W[i] + 0x6ED9EBA1) & 0x0ffffffff;
-      E = D;
-      D = C;
-      C = rotate_left(B, 30);
-      B = A;
-      A = temp;
-    }
+	for (i = 20; i <= 39; i++) {
+		temp = (rotate_left(A, 5) + (B ^ C ^ D) + E + W[i] + 0x6ED9EBA1) & 0x0ffffffff;
+		E = D;
+		D = C;
+		C = rotate_left(B, 30);
+		B = A;
+		A = temp;
+	}
 
-    for (i = 40; i <= 59; i++) {
-      temp = (rotate_left(A, 5) + ((B & C) | (B & D) | (C & D)) + E + W[i] + 0x8F1BBCDC) & 0x0ffffffff;
-      E = D;
-      D = C;
-      C = rotate_left(B, 30);
-      B = A;
-      A = temp;
-    }
+	for (i = 40; i <= 59; i++) {
+		temp = (rotate_left(A, 5) + ((B & C) | (B & D) | (C & D)) + E + W[i] + 0x8F1BBCDC) & 0x0ffffffff;
+		E = D;
+		D = C;
+		C = rotate_left(B, 30);
+		B = A;
+		A = temp;
+	}
 
-    for (i = 60; i <= 79; i++) {
-      temp = (rotate_left(A, 5) + (B ^ C ^ D) + E + W[i] + 0xCA62C1D6) & 0x0ffffffff;
-      E = D;
-      D = C;
-      C = rotate_left(B, 30);
-      B = A;
-      A = temp;
-    }
+	for (i = 60; i <= 79; i++) {
+		temp = (rotate_left(A, 5) + (B ^ C ^ D) + E + W[i] + 0xCA62C1D6) & 0x0ffffffff;
+		E = D;
+		D = C;
+		C = rotate_left(B, 30);
+		B = A;
+		A = temp;
+	}
 
-    H0 = (H0 + A) & 0x0ffffffff;
-    H1 = (H1 + B) & 0x0ffffffff;
-    H2 = (H2 + C) & 0x0ffffffff;
-    H3 = (H3 + D) & 0x0ffffffff;
-    H4 = (H4 + E) & 0x0ffffffff;
-  }
+	H0 = (H0 + A) & 0x0ffffffff;
+	H1 = (H1 + B) & 0x0ffffffff;
+	H2 = (H2 + C) & 0x0ffffffff;
+	H3 = (H3 + D) & 0x0ffffffff;
+	H4 = (H4 + E) & 0x0ffffffff;
+}
 
-  temp = cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) + cvt_hex(H4);
-  return temp.toLowerCase();
+temp = cvt_hex(H0) + cvt_hex(H1) + cvt_hex(H2) + cvt_hex(H3) + cvt_hex(H4);
+return temp.toLowerCase();
 }
