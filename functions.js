@@ -13,7 +13,7 @@
 			$(this).bind('enterPress', fn);
 			$(this).keypress(function(e) {
 				if(e.keyCode == 13) {
-					$(this).trigger("enterPress");
+					$(this).trigger('enterPress');
 				}
 			})
 		});
@@ -23,7 +23,7 @@
 		return this.each(function(index) {
 			var src = $(this).attr('src');
 			$(this).attr('src', src);
-			console.log("reload image:\nimg="+index+"\nsrc='"+src+"'");
+			console.log("reload image:\nimg=" + index + "\nsrc='" + src + '"');
 		});
 	};
 });
@@ -49,7 +49,7 @@ var emailpattern = new RegExp('^([a-zA-Z0-9\\-\\.\\_]+)(\\@)([a-zA-Z0-9\\-\\.]+)
 
 //--- Scroll to place ---
 $(function() {
-	$("a[href^='#']:not(.noscroll)").on('click', function(event) {
+	$('a[href*="#"]:not([href="#"]):not(.noscroll)').on('click', function(event) {
 		event.preventDefault();
 
 		var target = $(this).attr('href');
@@ -60,19 +60,19 @@ $(function() {
 })
 
 function scrollto (target, valuetype) {
-	if(typeof valuetype == "undefined") {
-		var valuetype = "object";
+	if(typeof valuetype == 'undefined') {
+		var valuetype = 'object';
 	}
-	if(valuetype == "position") {
+	if(valuetype == 'position') {
 		var place = target;
 	}
-	if(valuetype == "object") {
+	if(valuetype == 'object') {
 		if($(target).length > 0) {
 			var targetPos = $(target).offset().top;
 			var bodyTop = $('body').offset().top;
 			var place = targetPos - bodyTop;
 		} else {
-			console.error("Can not scroll to '" + target + "' - object not found" );
+			console.error('Can not scroll to "' + target + '" - object not found' );
 		}
 	}
 
@@ -86,12 +86,12 @@ function scrollto (target, valuetype) {
 
 //--- images first show after load --------------------------------------------
 $(function() {
-	if(typeof images_show_after_laod == "undefined") {
+	if(typeof images_show_after_laod == 'undefined') {
 		var images_show_after_laod = true;
 	}
 	if(images_show_after_laod) {
 		$('img').each(function(){
-			if(!$(this).hasClass("nojsload")) {
+			if(!$(this).hasClass('nojsload')) {
 				$(this).hide();
 				$(this).on('load', function() {
 					$(this).fadeIn(400);
